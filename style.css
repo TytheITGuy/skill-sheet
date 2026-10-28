@@ -1,0 +1,36 @@
+body {
+    background-color: #1a1a2a;
+    color: white;
+    font-family: Arial, sans-serif;
+}
+
+h1 {
+    color: #ff4d6d;
+    text-align: center;
+}
+
+li {
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+.card {
+    background-color: #16213e;
+    border: 2px solid #4cc9f0;
+    border-radius: 12px;
+    padding: 10px;
+    margin: 10px;
+}
+
+.card.gold {
+    background-color: #16213e;
+    border: 2px solid #00ff15;
+    border-radius: 12px;
+    padding: 10px;
+    margin: 10px;
+}
+
+.card.done {
+    opacity: 0.5;
+    text-decoration: line-through;
+}
