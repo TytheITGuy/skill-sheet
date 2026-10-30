@@ -1,23 +1,41 @@
+console.log("app.js loaded");
 const cards = document.querySelectorAll(".card");
 const xpDisplay = document.getElementById("xp");
-let totalXP = 0;
+
+let totalXP = Number(localStorage.getItem("totalXP")) || 0;
+let doneIds = JSON.parse(localStorage.getItem("doneIds")) || [];
+
+function save() {
+  localStorage.setItem("totalXP", totalXP);
+  localStorage.setItem("doneIds", JSON.stringify(doneIds));
+}
+
+xpDisplay.textContent = totalXP;
 
 cards.forEach(function (card) {
-    card.addEventListener("click", function () {
-        console.log(card.classList);
-        card.classList.toggle("done");
+  const id = card.dataset.id;
 
-        const cardXP = Number(card.dataset.xp);
+  if (doneIds.includes(id)) {
+    card.classList.add("done");
+  }
 
-        if (card.classList.contains("done")){
-            totalXP = totalXP + cardXP;
-        } else {
-            totalXP = totalXP - cardXP;
-        }
+  card.addEventListener("click", function () {
+    card.classList.toggle("done");
+    const cardXP = Number(card.dataset.xp);
 
-        xpDisplay.textContent = totalXP;
-    });
+    if (card.classList.contains("done")) {
+      totalXP = totalXP + cardXP;
+      doneIds.push(id);
+    } else {
+      totalXP = totalXP - cardXP;
+      doneIds = doneIds.filter(function (savedId) {
+        return savedId !== id;
+      });
+    }
+
+    xpDisplay.textContent = totalXP;
+    save();
+  });
 });
-
 
 
