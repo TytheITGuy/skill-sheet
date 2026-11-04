@@ -34,3 +34,21 @@ li {
     opacity: 0.5;
     text-decoration: line-through;
 }
+
+
+.xp-bar {
+    background-color: #16213e;
+    border: 2px solid #4cc9f0;
+    border-radius: 12px;
+    height: 24px;
+    margin: 20px;
+    overflow: hidden;
+}
+
+
+.xp-fill {
+    background-color: #ffd60a;
+    height: 100%;
+    width: 0%;
+
+}

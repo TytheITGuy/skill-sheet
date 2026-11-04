@@ -12,6 +12,19 @@ function save() {
 
 xpDisplay.textContent = totalXP;
 
+
+function updateDisplay() {
+  const level = Math.floor(totalXP / 100) + 1;
+  const xpIntoLevel = totalXP % 100;
+  const percent = xpIntoLevel;
+
+
+  document.getElementById("level").textContent = level;
+  document.getElementById("xp-fill").style.width = percent + "%";
+}
+
+
+
 cards.forEach(function (card) {
   const id = card.dataset.id;
 
@@ -34,6 +47,7 @@ cards.forEach(function (card) {
     }
 
     xpDisplay.textContent = totalXP;
+    updateDisplay();
     save();
   });
 });
