@@ -5,6 +5,17 @@ const xpDisplay = document.getElementById("xp");
 let totalXP = Number(localStorage.getItem("totalXP")) || 0;
 let doneIds = JSON.parse(localStorage.getItem("doneIds")) || [];
 
+const today = new Date().toDateString();
+const lastDate = localStorage.getItem("lastDate");
+
+if (lastDate !== today) {
+  doneIds = [];
+  localStorage.setItem("lastDate", today);
+  save();
+
+}
+
+
 function save() {
   localStorage.setItem("totalXP", totalXP);
   localStorage.setItem("doneIds", JSON.stringify(doneIds));
