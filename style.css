@@ -35,6 +35,10 @@ li {
     text-decoration: line-through;
 }
 
+.card.rest {
+    opacity: 0.35;
+    pointer-events: none;
+}
 
 .xp-bar {
     background-color: #16213e;

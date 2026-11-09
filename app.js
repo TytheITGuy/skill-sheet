@@ -39,6 +39,13 @@ updateDisplay();
 cards.forEach(function (card) {
   const id = card.dataset.id;
 
+  const days = card.dataset.days.split(",");
+  const todayNumber = new Date().getDay();
+
+  if (!days.includes(String(todayNumber))) {
+    card.classList.add("rest");
+  }
+
   if (doneIds.includes(id)) {
     card.classList.add("done");
   }
