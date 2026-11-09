@@ -23,7 +23,7 @@ function updateDisplay() {
   document.getElementById("xp-fill").style.width = percent + "%";
 }
 
-
+updateDisplay();
 
 cards.forEach(function (card) {
   const id = card.dataset.id;
