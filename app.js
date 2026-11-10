@@ -5,6 +5,14 @@ const xpDisplay = document.getElementById("xp");
 let totalXP = Number(localStorage.getItem("totalXP")) || 0;
 let doneIds = JSON.parse(localStorage.getItem("doneIds")) || [];
 
+const MAX_LEVEL = 100;
+
+function xpToNext(level) {
+  return 100 + level * 4;
+}
+
+
+
 const titles = [
   {minLevel: 50, name: "Master"},
   {minLevel: 25, name: "Veteran"},
@@ -31,6 +39,22 @@ function save() {
 }
 
 xpDisplay.textContent = totalXP;
+
+
+function getLevelInfo(totalXP) {
+  let level = 1;
+  let xpLeft = totalXP;
+
+  while (level < MAX_LEVEL && xpLeft >= xpToNext(level)) {
+    xpLeft = xpLeft - xpToNext(level);
+    level = level + 1;
+  }
+
+  return {level: level, xpIntoLevel: xpLeft, xpNeeded: xpToNext(level)};
+
+}
+
+
 
 
 function updateDisplay() {
