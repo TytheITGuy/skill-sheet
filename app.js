@@ -58,13 +58,14 @@ function getLevelInfo(totalXP) {
 
 
 function updateDisplay() {
-  const level = Math.min(Math.floor(totalXP / 100) + 1,100);
-  const xpIntoLevel = totalXP % 100;
-  const percent = xpIntoLevel;
+  const info = getLevelInfo(totalXP);
+  const percent = (info.xpIntoLevel / info.xpNeeded) * 100
 
-  document.getElementById("title").textContent = getTitle(level);
-  document.getElementById("level").textContent = level;
+  document.getElementById("title").textContent = getTitle(info.level);
+  document.getElementById("level").textContent = info.level;
   document.getElementById("xp-fill").style.width = percent + "%";
+  document.getElementById("xp-progress").textContent = info.xpIntoLevel + " / " + info.xpNeeded + "XP to next level";
+
 }
 
 updateDisplay();
