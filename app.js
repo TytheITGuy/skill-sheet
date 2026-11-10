@@ -5,6 +5,15 @@ const xpDisplay = document.getElementById("xp");
 let totalXP = Number(localStorage.getItem("totalXP")) || 0;
 let doneIds = JSON.parse(localStorage.getItem("doneIds")) || [];
 
+const titles = [
+  {minLevel: 50, name: "Master"},
+  {minLevel: 25, name: "Veteran"},
+  {minLevel: 10, name: "Adept"},
+  {minLevel: 5, name: "Apprentice"},
+  {minLevel: 1, name: "Novice"}
+
+];
+
 const today = new Date().toDateString();
 const lastDate = localStorage.getItem("lastDate");
 
@@ -25,11 +34,11 @@ xpDisplay.textContent = totalXP;
 
 
 function updateDisplay() {
-  const level = Math.floor(totalXP / 100) + 1;
+  const level = Math.min(Math.floor(totalXP / 100) + 1,100);
   const xpIntoLevel = totalXP % 100;
   const percent = xpIntoLevel;
 
-
+  document.getElementById("title").textContent = getTitle(level);
   document.getElementById("level").textContent = level;
   document.getElementById("xp-fill").style.width = percent + "%";
 }
@@ -71,3 +80,10 @@ cards.forEach(function (card) {
 });
 
 
+function getTitle(level) {
+  for (const t of titles){
+    if (level >= t.minLevel) {
+      return t.name;
+    }
+  }
+}
