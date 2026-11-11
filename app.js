@@ -130,6 +130,25 @@ cards.forEach(function (card) {
   });
 });
 
+const tabButtons = document.querySelectorAll(".tab-button");
+const tabPanels = document.querySelectorAll(".tab-panel");
+
+function showTab(name) {
+  tabPanels.forEach(function (panel) {
+    panel.classList.toggle("active", panel.id === name);
+  });
+  tabButtons.forEach(function (button) {
+    button.classList.toggle("active", button.dataset.tab === name);
+  });
+}
+
+tabButtons.forEach(function (button) {
+  button.addEventListener("click", function () {
+    showTab(button.dataset.tab);
+  });
+});
+
+
 
 function getTitle(level) {
   for (const t of titles){

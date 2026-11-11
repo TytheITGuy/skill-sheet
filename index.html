@@ -13,8 +13,16 @@
         <p id="xp-progress"></p>
         <p>This month: <span id="month-xp">0</span> XP</p>
         
-    
+
+        <div class ="tabs">
+            <button class="tab-button" data-tab="habits">Habits</button>
+            <button class="tab-button" data-tab="character">Character</button>
+        </div>
+
+
+    <section class="tab-panel" id="habits">
         <h2> This is your stats</h2>
+
 
         <div class = "card" data-id="exercise" data-xp="50" data-days="1,2,3,4,5">
             <h2>Exercise</h2>
@@ -35,6 +43,15 @@
             <h2>Reading</h2>
             <p> Read one chapter of a book</p>
         </div>
+
+    </section>
+    
+    <section class="tab-panel" id="character">
+        <h2>Character</h2>
+        <p>Stats coming soon.</p>
+    </section>
+
+
     <script src="app.js"></script>
     </body>
 </html>
