@@ -66,6 +66,15 @@ function updateDisplay() {
   document.getElementById("xp-fill").style.width = percent + "%";
   document.getElementById("xp-progress").textContent = info.xpIntoLevel + " / " + info.xpNeeded + "XP to next level";
 
+
+
+  if (info.level >= MAX_LEVEL) {
+    document.getElementById("xp-progress").textContent = "MAX LEVEL";
+    document.getElementById("xp-fill").style.width = "100%";
+  } else {
+    document.getElementById("xp-progress").textContent = info.xpIntoLevel + " / " + info.xpNeeded + "XP to next level";
+  }
+
 }
 
 updateDisplay();
