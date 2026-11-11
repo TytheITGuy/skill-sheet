@@ -4,6 +4,7 @@ const xpDisplay = document.getElementById("xp");
 
 let totalXP = Number(localStorage.getItem("totalXP")) || 0;
 let doneIds = JSON.parse(localStorage.getItem("doneIds")) || [];
+let monthXP = Number(localStorage.getItem("monthXP")) || 0;
 
 const MAX_LEVEL = 100;
 
@@ -35,7 +36,9 @@ if (lastDate !== today) {
 
 function save() {
   localStorage.setItem("totalXP", totalXP);
+  localStorage.setItem("monthXP", monthXP);
   localStorage.setItem("doneIds", JSON.stringify(doneIds));
+  
 }
 
 xpDisplay.textContent = totalXP;
@@ -75,6 +78,18 @@ function updateDisplay() {
     document.getElementById("xp-progress").textContent = info.xpIntoLevel + " / " + info.xpNeeded + "XP to next level";
   }
 
+const now = new Date();
+const monthKey = now.getFullYear() + "-" + (now.getMonth() + 1);
+const lastMonth = localStorage.getItem("lastMonth");
+
+if (lastMonth !== monthKey) {
+  monthXP = 0;
+  localStorage.setItem("lastMonth", monthKey);
+
+}
+
+
+
 }
 
 updateDisplay();
@@ -99,9 +114,11 @@ cards.forEach(function (card) {
 
     if (card.classList.contains("done")) {
       totalXP = totalXP + cardXP;
+      monthXP = monthXP + cardXP;
       doneIds.push(id);
     } else {
       totalXP = totalXP - cardXP;
+      monthXP = monthXP - cardXP;
       doneIds = doneIds.filter(function (savedId) {
         return savedId !== id;
       });
