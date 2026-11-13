@@ -78,12 +78,22 @@ function getLevelInfo(totalXP) {
 function renderStats() {
   const list = document.getElementById("stats-list");
   list.innerHTML = "";
+  let totalCompletions = 0;
 
   for (const id in habitNames) {
+    const count = stats.completions[id] || 0;
+    totalCompletions = totalCompletions + count;
+
     const li = document.createElement("li");
-    li.textContent = habitNames[id] + ": " + (stats.completions[id] || 0) + " times";
+    if (count === 1) {
+      li.textContent = habitNames[id] + ": " + count + " time";
+    } else {
+      li.textContent = habitNames[id] + ": " + count + " times";
+    }
     list.appendChild(li);
   }
+
+  document.getElementById("total-completions").textContent = totalCompletions;
 }
 
 
