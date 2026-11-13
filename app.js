@@ -5,6 +5,14 @@ const xpDisplay = document.getElementById("xp");
 let totalXP = Number(localStorage.getItem("totalXP")) || 0;
 let doneIds = JSON.parse(localStorage.getItem("doneIds")) || [];
 let monthXP = Number(localStorage.getItem("monthXP")) || 0;
+let stats = JSON.parse(localStorage.getItem("stats")) || { completions:  {} };
+
+const habitNames = {
+  exercise: "Exercise",
+  coding: "Study",
+  jobs: "Jobs",
+  reading: "Reading",
+};
 
 const MAX_LEVEL = 100;
 
@@ -38,11 +46,21 @@ function save() {
   localStorage.setItem("totalXP", totalXP);
   localStorage.setItem("monthXP", monthXP);
   localStorage.setItem("doneIds", JSON.stringify(doneIds));
+  localStorage.setItem("stats", JSON.stringify(stats));
   
 }
 
 xpDisplay.textContent = totalXP;
 
+const now = new Date();
+const monthKey = now.getFullYear() + "-" + (now.getMonth() + 1);
+const lastMonth = localStorage.getItem("lastMonth");
+
+if (lastMonth !== monthKey) {
+  monthXP = 0;
+  localStorage.setItem("lastMonth", monthKey);
+  save();
+}
 
 function getLevelInfo(totalXP) {
   let level = 1;
@@ -57,39 +75,35 @@ function getLevelInfo(totalXP) {
 
 }
 
+function renderStats() {
+  const list = document.getElementById("stats-list");
+  list.innerHTML = "";
 
+  for (const id in habitNames) {
+    const li = document.createElement("li");
+    li.textContent = habitNames[id] + ": " + (stats.completions[id] || 0) + " times";
+    list.appendChild(li);
+  }
+}
 
 
 function updateDisplay() {
   const info = getLevelInfo(totalXP);
-  const percent = (info.xpIntoLevel / info.xpNeeded) * 100
+  const percent = (info.xpIntoLevel / info.xpNeeded) * 100;
 
   document.getElementById("title").textContent = getTitle(info.level);
   document.getElementById("level").textContent = info.level;
   document.getElementById("xp-fill").style.width = percent + "%";
-  document.getElementById("xp-progress").textContent = info.xpIntoLevel + " / " + info.xpNeeded + "XP to next level";
-
-
+  document.getElementById("month-xp").textContent = monthXP;
 
   if (info.level >= MAX_LEVEL) {
     document.getElementById("xp-progress").textContent = "MAX LEVEL";
     document.getElementById("xp-fill").style.width = "100%";
   } else {
-    document.getElementById("xp-progress").textContent = info.xpIntoLevel + " / " + info.xpNeeded + "XP to next level";
+    document.getElementById("xp-progress").textContent = info.xpIntoLevel + " / " + info.xpNeeded + " XP to next level";
   }
 
-const now = new Date();
-const monthKey = now.getFullYear() + "-" + (now.getMonth() + 1);
-const lastMonth = localStorage.getItem("lastMonth");
-
-if (lastMonth !== monthKey) {
-  monthXP = 0;
-  localStorage.setItem("lastMonth", monthKey);
-
-}
-
-
-
+  renderStats();
 }
 
 updateDisplay();
@@ -115,10 +129,12 @@ cards.forEach(function (card) {
     if (card.classList.contains("done")) {
       totalXP = totalXP + cardXP;
       monthXP = monthXP + cardXP;
+      stats.completions[id] = (stats.completions[id] || 0) + 1;
       doneIds.push(id);
     } else {
       totalXP = totalXP - cardXP;
       monthXP = monthXP - cardXP;
+      stats.completions[id] = Math.max((stats.completions[id] || 0) -1, 0);
       doneIds = doneIds.filter(function (savedId) {
         return savedId !== id;
       });
@@ -148,7 +164,7 @@ tabButtons.forEach(function (button) {
   });
 });
 
-
+showTab("habits");
 
 function getTitle(level) {
   for (const t of titles){
