@@ -1,7 +1,14 @@
 body {
-    background-color: #1a1a2a;
-    color: white;
-    font-family: Arial, sans-serif;
+  background-color: #0b1020;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+  background-size: 40px 40px;
+  color: #e8ecf8;
+  font-family: "Space Grotesk", sans-serif;
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 16px;
 }
 
 h1 {
