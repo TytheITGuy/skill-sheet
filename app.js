@@ -1,5 +1,4 @@
 console.log("app.js loaded");
-const cards = document.querySelectorAll(".card");
 const xpDisplay = document.getElementById("xp");
 
 let totalXP = Number(localStorage.getItem("totalXP")) || 0;
@@ -13,6 +12,14 @@ const habitNames = {
   jobs: "Jobs",
   reading: "Reading",
 };
+
+const habits = [
+  { id: "exercise", name: "Exercise", desc: "Walk or run 5 miles", xp: 50, days: [1, 2, 3, 4, 5] },
+  { id: "coding", name: "Study", desc: "Study coding exercises", xp: 30, days: [0, 1, 2, 3, 4, 5, 6] },
+  { id: "jobs", name: "Jobs", desc: "Apply for jobs", xp: 20, days: [1, 2, 3, 4, 5] },
+  { id: "reading", name: "Reading", desc: "Read one chapter of a book", xp: 10, days: [0, 1, 2, 3, 4, 5, 6] },
+];
+
 
 const MAX_LEVEL = 100;
 
@@ -118,43 +125,58 @@ function updateDisplay() {
 
 updateDisplay();
 
-cards.forEach(function (card) {
-  const id = card.dataset.id;
+const habitList = document.getElementById("habit-list");
 
-  const days = card.dataset.days.split(",");
+function renderHabits() {
+  habitList.innerHTML = "";
   const todayNumber = new Date().getDay();
 
-  if (!days.includes(String(todayNumber))) {
-    card.classList.add("rest");
-  }
+  habits.forEach(function (habit) {
+    const card = document.createElement("div");
+    card.className = "card";
 
-  if (doneIds.includes(id)) {
-    card.classList.add("done");
-  }
+    const title = document.createElement("h2");
+    title.textContent = habit.name;
+    const desc = document.createElement("p");
+    desc.textContent = habit.desc;
+    card.appendChild(title);
+    card.appendChild(desc);
 
-  card.addEventListener("click", function () {
-    card.classList.toggle("done");
-    const cardXP = Number(card.dataset.xp);
-
-    if (card.classList.contains("done")) {
-      totalXP = totalXP + cardXP;
-      monthXP = monthXP + cardXP;
-      stats.completions[id] = (stats.completions[id] || 0) + 1;
-      doneIds.push(id);
-    } else {
-      totalXP = totalXP - cardXP;
-      monthXP = monthXP - cardXP;
-      stats.completions[id] = Math.max((stats.completions[id] || 0) -1, 0);
-      doneIds = doneIds.filter(function (savedId) {
-        return savedId !== id;
-      });
+    if (!habit.days.includes(todayNumber)) {
+      card.classList.add("rest");
     }
 
-    xpDisplay.textContent = totalXP;
-    updateDisplay();
-    save();
+    if (doneIds.includes(habit.id)) {
+      card.classList.add("done");
+    }
+
+    card.addEventListener("click", function () {
+      card.classList.toggle("done");
+
+      if (card.classList.contains("done")) {
+        totalXP = totalXP + habit.xp;
+        monthXP = monthXP + habit.xp;
+        stats.completions[habit.id] = (stats.completions[habit.id] || 0) + 1;
+        doneIds.push(habit.id);
+      } else {
+        totalXP = totalXP - habit.xp;
+        monthXP = monthXP - habit.xp;
+        stats.completions[habit.id] = Math.max((stats.completions[habit.id] || 0) - 1, 0);
+        doneIds = doneIds.filter(function (savedId) {
+          return savedId !== habit.id;
+        });
+      }
+
+      xpDisplay.textContent = totalXP;
+      updateDisplay();
+      save();
+    });
+
+    habitList.appendChild(card);
   });
-});
+}
+
+renderHabits();
 
 const tabButtons = document.querySelectorAll(".tab-button");
 const tabPanels = document.querySelectorAll(".tab-panel");
