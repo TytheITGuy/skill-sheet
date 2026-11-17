@@ -72,3 +72,8 @@ li {
 .tab-panel.active {
     display: block;
 }
+
+#today-progress.perfect {
+  color: #ffd60a;
+  font-weight: 700;
+}

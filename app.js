@@ -119,7 +119,15 @@ function updateDisplay() {
   const clearedToday = activeToday.filter(function (habit) {
     return doneIds.includes(habit.id);
   });
-  document.getElementById("today-progress").textContent = clearedToday.length + " of " + activeToday.length + " habits cleared today";
+    const todayText = document.getElementById("today-progress");
+  const perfect = clearedToday.length === activeToday.length;
+  todayText.classList.toggle("perfect", perfect);
+
+  if (perfect) {
+    todayText.textContent = "Perfect day! All " + activeToday.length + " habits cleared";
+  } else {
+    todayText.textContent = clearedToday.length + " of " + activeToday.length + " habits cleared today";
+  }
 
 
   if (info.level >= MAX_LEVEL) {
