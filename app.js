@@ -112,6 +112,15 @@ function updateDisplay() {
   document.getElementById("level").textContent = info.level;
   document.getElementById("xp-fill").style.width = percent + "%";
   document.getElementById("month-xp").textContent = monthXP;
+  
+   const activeToday = habits.filter(function (habit) {
+    return habit.days.includes(new Date().getDay());
+  });
+  const clearedToday = activeToday.filter(function (habit) {
+    return doneIds.includes(habit.id);
+  });
+  document.getElementById("today-progress").textContent = clearedToday.length + " of " + activeToday.length + " habits cleared today";
+
 
   if (info.level >= MAX_LEVEL) {
     document.getElementById("xp-progress").textContent = "MAX LEVEL";
