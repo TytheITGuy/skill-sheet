@@ -70,3 +70,15 @@ li {
   color: #ffd60a;
   font-weight: 700;
 }
+
+.xp-badge {
+    display: inline-block;
+    padding: 4px 12px;
+    border: 2px solid var(--c);
+    border-radius: 999px;
+    color: var(--c);
+    font-size: 600;
+    font-weight: 14px;
+    margin-top: 8px;
+
+}

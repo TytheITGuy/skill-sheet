@@ -154,6 +154,12 @@ function renderHabits() {
     desc.textContent = habit.desc;
     card.appendChild(title);
     card.appendChild(desc);
+    const badge = document.createElement("span");
+    badge.className = "xp-badge";
+    badge.textContent = habit.xp + "XP";
+    card.appendChild(badge);
+
+
 
     if (!habit.days.includes(todayNumber)) {
       card.classList.add("rest");
