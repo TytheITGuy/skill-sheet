@@ -9,10 +9,10 @@ let stats = JSON.parse(localStorage.getItem("stats")) || { completions:  {} };
 
 
 const habits = [
-  { id: "exercise", name: "Exercise", desc: "Walk or run 5 miles", xp: 50, days: [1, 2, 3, 4, 5] },
-  { id: "coding", name: "Coding", desc: "Study coding exercises", xp: 30, days: [0, 1, 2, 3, 4, 5, 6] },
-  { id: "jobs", name: "Jobs", desc: "Apply for jobs", xp: 20, days: [1, 2, 3, 4, 5] },
-  { id: "reading", name: "Reading", desc: "Read one chapter of a book", xp: 10, days: [0, 1, 2, 3, 4, 5, 6] },
+  { id: "exercise", name: "Exercise", desc: "Walk or run 5 miles", xp: 50, days: [1, 2, 3, 4, 5], color: "#ff4d5a" },
+  { id: "coding", name: "Coding", desc: "Study coding exercises", xp: 30, days: [0, 1, 2, 3, 4, 5, 6], color: "#5c86ff" },
+  { id: "jobs", name: "Jobs", desc: "Apply for jobs", xp: 20, days: [1, 2, 3, 4, 5], color: "#ffb020" },
+  { id: "reading", name: "Reading", desc: "Read one chapter of a book", xp: 10, days: [0, 1, 2, 3, 4, 5, 6], color: "#2ee07f" },
 ];
 
 
@@ -146,6 +146,7 @@ function renderHabits() {
   habits.forEach(function (habit) {
     const card = document.createElement("div");
     card.className = "card";
+    card.style.setProperty("--c", habit.color);
 
     const title = document.createElement("h2");
     title.textContent = habit.name;
