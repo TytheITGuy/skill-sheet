@@ -6,16 +6,11 @@ let doneIds = JSON.parse(localStorage.getItem("doneIds")) || [];
 let monthXP = Number(localStorage.getItem("monthXP")) || 0;
 let stats = JSON.parse(localStorage.getItem("stats")) || { completions:  {} };
 
-const habitNames = {
-  exercise: "Exercise",
-  coding: "Study",
-  jobs: "Jobs",
-  reading: "Reading",
-};
+
 
 const habits = [
   { id: "exercise", name: "Exercise", desc: "Walk or run 5 miles", xp: 50, days: [1, 2, 3, 4, 5] },
-  { id: "coding", name: "Study", desc: "Study coding exercises", xp: 30, days: [0, 1, 2, 3, 4, 5, 6] },
+  { id: "coding", name: "Coding", desc: "Study coding exercises", xp: 30, days: [0, 1, 2, 3, 4, 5, 6] },
   { id: "jobs", name: "Jobs", desc: "Apply for jobs", xp: 20, days: [1, 2, 3, 4, 5] },
   { id: "reading", name: "Reading", desc: "Read one chapter of a book", xp: 10, days: [0, 1, 2, 3, 4, 5, 6] },
 ];
@@ -87,18 +82,18 @@ function renderStats() {
   list.innerHTML = "";
   let totalCompletions = 0;
 
-  for (const id in habitNames) {
-    const count = stats.completions[id] || 0;
+  habits.forEach(function (habit) {
+    const count = stats.completions[habit.id] || 0;
     totalCompletions = totalCompletions + count;
 
     const li = document.createElement("li");
     if (count === 1) {
-      li.textContent = habitNames[id] + ": " + count + " time";
+      li.textContent = habit.name + ": " + count + " time";
     } else {
-      li.textContent = habitNames[id] + ": " + count + " times";
+      li.textContent = habit.name + ": " + count + " times";
     }
     list.appendChild(li);
-  }
+  });
 
   document.getElementById("total-completions").textContent = totalCompletions;
 }
