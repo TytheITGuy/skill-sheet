@@ -2,11 +2,18 @@ console.log("app.js loaded");
 const xpDisplay = document.getElementById("xp");
 
 let totalXP = Number(localStorage.getItem("totalXP")) || 0;
-let doneIds = JSON.parse(localStorage.getItem("doneIds")) || [];
+let progress = JSON.parse(localStorage.getItem("progress")) || {};
 let monthXP = Number(localStorage.getItem("monthXP")) || 0;
 let stats = JSON.parse(localStorage.getItem("stats")) || { completions:  {} };
 
-
+const oldDoneIds = localStorage.getItem("doneIds");
+if (oldDoneIds) {
+  JSON.parse(oldDoneIds).forEach(function (id) {
+    progress[id] = 1;
+  });
+  localStorage.removeItem("doneIds");
+  save();
+}
 
 const habits = [
   { id: "exercise", name: "Exercise", desc: "Walk or run 5 miles", xp: 50, days: [1, 2, 3, 4, 5], color: "#ff4d5a" },
@@ -37,7 +44,7 @@ const today = new Date().toDateString();
 const lastDate = localStorage.getItem("lastDate");
 
 if (lastDate !== today) {
-  doneIds = [];
+  progress = {};
   localStorage.setItem("lastDate", today);
   save();
 
@@ -47,7 +54,7 @@ if (lastDate !== today) {
 function save() {
   localStorage.setItem("totalXP", totalXP);
   localStorage.setItem("monthXP", monthXP);
-  localStorage.setItem("doneIds", JSON.stringify(doneIds));
+  localStorage.setItem("progress", JSON.stringify(progress));
   localStorage.setItem("stats", JSON.stringify(stats));
   
 }
@@ -112,7 +119,7 @@ function updateDisplay() {
     return habit.days.includes(new Date().getDay());
   });
   const clearedToday = activeToday.filter(function (habit) {
-    return doneIds.includes(habit.id);
+    return (progress[habit.id] || 0) > 0;
   });
     const todayText = document.getElementById("today-progress");
   const perfect = clearedToday.length === activeToday.length;
@@ -165,27 +172,26 @@ function renderHabits() {
       card.classList.add("rest");
     }
 
-    if (doneIds.includes(habit.id)) {
+    if ((progress[habit.id] || 0) > 0) {
       card.classList.add("done");
     }
 
     card.addEventListener("click", function () {
-      card.classList.toggle("done");
+      const amount = progress[habit.id] || 0;
 
-      if (card.classList.contains("done")) {
+      if (amount === 0) {
+        progress[habit.id] = 1;
         totalXP = totalXP + habit.xp;
         monthXP = monthXP + habit.xp;
         stats.completions[habit.id] = (stats.completions[habit.id] || 0) + 1;
-        doneIds.push(habit.id);
       } else {
+        progress[habit.id] = 0;
         totalXP = totalXP - habit.xp;
         monthXP = monthXP - habit.xp;
         stats.completions[habit.id] = Math.max((stats.completions[habit.id] || 0) - 1, 0);
-        doneIds = doneIds.filter(function (savedId) {
-          return savedId !== habit.id;
-        });
       }
 
+      card.classList.toggle("done", progress[habit.id] > 0);
       xpDisplay.textContent = totalXP;
       updateDisplay();
       save();
