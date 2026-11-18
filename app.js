@@ -146,6 +146,22 @@ updateDisplay();
 
 const habitList = document.getElementById("habit-list");
 
+function setAmount(habit, newAmount) {
+  const oldAmount = progress[habit.id] || 0;
+  const change = newAmount - oldAmount;
+
+  progress[habit.id] = newAmount;
+  totalXP = totalXP + change * habit.xp;
+  monthXP = monthXP + change * habit.xp;
+  stats.completions[habit.id] = Math.max((stats.completions[habit.id] || 0) + change, 0);
+
+  xpDisplay.textContent = totalXP;
+  save();
+  renderHabits();
+  updateDisplay();
+}
+
+
 function renderHabits() {
   habitList.innerHTML = "";
   const todayNumber = new Date().getDay();
@@ -172,29 +188,19 @@ function renderHabits() {
       card.classList.add("rest");
     }
 
-    if ((progress[habit.id] || 0) > 0) {
+    
+  if ((progress[habit.id] || 0) > 0) {
       card.classList.add("done");
     }
 
-    card.addEventListener("click", function () {
+        card.addEventListener("click", function () {
       const amount = progress[habit.id] || 0;
 
       if (amount === 0) {
-        progress[habit.id] = 1;
-        totalXP = totalXP + habit.xp;
-        monthXP = monthXP + habit.xp;
-        stats.completions[habit.id] = (stats.completions[habit.id] || 0) + 1;
+        setAmount(habit, 1);
       } else {
-        progress[habit.id] = 0;
-        totalXP = totalXP - habit.xp;
-        monthXP = monthXP - habit.xp;
-        stats.completions[habit.id] = Math.max((stats.completions[habit.id] || 0) - 1, 0);
+        setAmount(habit, 0);
       }
-
-      card.classList.toggle("done", progress[habit.id] > 0);
-      xpDisplay.textContent = totalXP;
-      updateDisplay();
-      save();
     });
 
     habitList.appendChild(card);
