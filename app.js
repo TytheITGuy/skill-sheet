@@ -182,6 +182,31 @@ function renderHabits() {
     badge.textContent = habit.xp + "XP";
     card.appendChild(badge);
 
+        const stepper = document.createElement("div");
+    stepper.className = "stepper";
+
+    const minus = document.createElement("button");
+    minus.textContent = "-";
+    minus.addEventListener("click", function (event) {
+      event.stopPropagation();
+      setAmount(habit, Math.max((progress[habit.id] || 0) - 1, 0));
+    });
+
+    const count = document.createElement("span");
+    count.textContent = progress[habit.id] || 0;
+
+    const plus = document.createElement("button");
+    plus.textContent = "+";
+    plus.addEventListener("click", function (event) {
+      event.stopPropagation();
+      setAmount(habit, (progress[habit.id] || 0) + 1);
+    });
+
+    stepper.appendChild(minus);
+    stepper.appendChild(count);
+    stepper.appendChild(plus);
+    card.appendChild(stepper);
+
 
 
     if (!habit.days.includes(todayNumber)) {

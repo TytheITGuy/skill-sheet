@@ -97,3 +97,36 @@ li {
     margin-top: 8px;
 
 }
+
+
+.stepper {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 12px;
+}
+
+.stepper button {
+    width: 36px;
+    height: 36px;
+    border: 2px solid var(--c);
+    border-radius: 8px;
+    background-color: transparent;
+    color: var(--c);
+    font-family: inherit;
+    font-size: 20px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.stepper button:hover {
+    background-color: var(--c);
+    color: #0b1020;
+}
+
+.stepper span {
+    min-width: 24px;
+    text-align: center;
+    font-size: 18px;
+    font-weight: 700;
+}
