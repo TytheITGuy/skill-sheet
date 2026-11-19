@@ -139,3 +139,16 @@ li {
     content: "HALF";
 }
 
+.xp-bar {
+    height: 14px;
+    background-color: #1c2745;
+    border: 2px solid #2a3a66;
+    border-radius: 999px;
+    overflow: hidden;
+}
+
+.xp-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #ffb020, #ffd60a);
+    border-radius: 999px;
+}
