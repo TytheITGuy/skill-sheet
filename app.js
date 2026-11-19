@@ -119,7 +119,7 @@ function updateDisplay() {
     return habit.days.includes(new Date().getDay());
   });
   const clearedToday = activeToday.filter(function (habit) {
-    return (progress[habit.id] || 0) > 0;
+    return (progress[habit.id] || 0) >= 1;
   });
     const todayText = document.getElementById("today-progress");
   const perfect = clearedToday.length === activeToday.length;
@@ -214,14 +214,16 @@ function renderHabits() {
     }
 
     
-  if ((progress[habit.id] || 0) > 0) {
-      card.classList.add("done");
-    }
+  const amountNow = progress[habit.id] || 0;
+    card.classList.toggle("done", amountNow > 0);
+    card.classList.toggle("half", amountNow > 0 && amountNow < 1);
 
-        card.addEventListener("click", function () {
+    card.addEventListener("click", function () {
       const amount = progress[habit.id] || 0;
 
       if (amount === 0) {
+        setAmount(habit, 0.5);
+      } else if (amount === 0.5) {
         setAmount(habit, 1);
       } else {
         setAmount(habit, 0);
