@@ -263,3 +263,10 @@ function getTitle(level) {
     }
   }
 }
+
+const dateDisplay = document.getElementById("today-date");
+dateDisplay.textContent = new Date().toLocaleDateString("en-US", {
+  weekday: "long",
+  month: "long",
+  day: "numeric",
+});

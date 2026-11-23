@@ -168,3 +168,9 @@ h1 {
 .card:hover {
     transform: translateY(-2px);
 }
+
+#today-date {
+    text-align: center;
+    color: #8f9bc4;
+    margin: 0 0 12px;
+}
