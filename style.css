@@ -152,3 +152,19 @@ li {
     background: linear-gradient(90deg, #ffb020, #ffd60a);
     border-radius: 999px;
 }
+
+h1 {
+    text-shadow: 
+    0 0 12px #ff4d6d;
+    
+    letter-spacing: 2px;
+}
+
+.card {
+    cursor: pointer;
+    transition: transform 0.15s, box-shadow 0.15s;
+}
+
+.card:hover {
+    transform: translateY(-2px);
+}
