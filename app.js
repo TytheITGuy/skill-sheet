@@ -105,6 +105,13 @@ function renderStats() {
   document.getElementById("total-completions").textContent = totalCompletions;
 }
 
+function getTodayXP() {
+  let sum = 0;
+  habits.forEach(function (habit) {
+    sum = sum + (progress[habit.id] || 0) * habit.xp;
+  });
+  return sum;
+}
 
 function updateDisplay() {
   const info = getLevelInfo(totalXP);
@@ -138,6 +145,10 @@ function updateDisplay() {
   } else {
     document.getElementById("xp-progress").textContent = info.xpIntoLevel + " / " + info.xpNeeded + " XP to next level";
   }
+
+
+  const todayXpDisplay = document.getElementById("today-xp");
+  todayXpDisplay.textContent = getTodayXP();
 
   renderStats();
 }
@@ -179,7 +190,7 @@ function renderHabits() {
     card.appendChild(desc);
     const badge = document.createElement("span");
     badge.className = "xp-badge";
-    badge.textContent = habit.xp + "XP";
+    badge.textContent = habit.xp + " XP";
     card.appendChild(badge);
 
         const stepper = document.createElement("div");
