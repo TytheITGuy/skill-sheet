@@ -5,6 +5,7 @@ let totalXP = Number(localStorage.getItem("totalXP")) || 0;
 let progress = JSON.parse(localStorage.getItem("progress")) || {};
 let monthXP = Number(localStorage.getItem("monthXP")) || 0;
 let stats = JSON.parse(localStorage.getItem("stats")) || { completions:  {} };
+let dayLog = JSON.parse(localStorage.getItem("dayLog")) || {};
 
 const oldDoneIds = localStorage.getItem("doneIds");
 if (oldDoneIds) {
@@ -56,6 +57,7 @@ function save() {
   localStorage.setItem("monthXP", monthXP);
   localStorage.setItem("progress", JSON.stringify(progress));
   localStorage.setItem("stats", JSON.stringify(stats));
+  localStorage.setItem("dayLog", JSON.stringify(dayLog));
   
 }
 
@@ -131,6 +133,11 @@ function updateDisplay() {
     const todayText = document.getElementById("today-progress");
   const perfect = clearedToday.length === activeToday.length;
   todayText.classList.toggle("perfect", perfect);
+
+  if (activeToday.length > 0) {
+    dayLog[today] = clearedToday.length / activeToday.length;
+    save();
+  }
 
   if (perfect) {
     todayText.textContent = "Perfect day! All " + activeToday.length + " habits cleared";
