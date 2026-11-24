@@ -174,3 +174,36 @@ h1 {
     color: #8f9bc4;
     margin: 0 0 12px;
 }
+
+#week-strip {
+    display: flex;
+    justify-content: space-between;
+    margin: 12px 20px;
+}
+
+.week-day {
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid #2a3a66;
+    border-radius: 50%;
+    color: #8f9bc4;
+    font-weight: 700;
+}
+
+.week-day.part {
+    border-color: #ffb020;
+    color: #ffb020;
+}
+
+.week-day.full {
+    background-color: #ffd60a;
+    border-color: #ffd60a;
+    color: #0b1020;
+}
+
+.week-day.today {
+    box-shadow: 0 0 8px #4cc9f0;
+}
