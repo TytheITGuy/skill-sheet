@@ -115,6 +115,37 @@ function getTodayXP() {
   return sum;
 }
 
+function renderWeek() {
+  const strip = document.getElementById("week-strip");
+  strip.innerHTML = "";
+
+  const letters = ["S", "M", "T", "W", "T", "F", "S"];
+  const start = new Date();
+  start.setDate(start.getDate() - start.getDay());
+
+  for (let i = 0; i < 7; i++) {
+    const day = new Date(start);
+    day.setDate(start.getDate() + i);
+    const ratio = dayLog[day.toDateString()] || 0;
+
+    const box = document.createElement("div");
+    box.className = "week-day";
+    box.textContent = letters[i];
+
+    if (ratio >= 1) {
+      box.classList.add("full");
+    } else if (ratio > 0) {
+      box.classList.add("part");
+    }
+    if (day.toDateString() === today) {
+      box.classList.add("today");
+    }
+
+    strip.appendChild(box);
+  }
+}
+
+
 function updateDisplay() {
   const info = getLevelInfo(totalXP);
   const percent = (info.xpIntoLevel / info.xpNeeded) * 100;
@@ -156,6 +187,7 @@ function updateDisplay() {
 
   const todayXpDisplay = document.getElementById("today-xp");
   todayXpDisplay.textContent = getTodayXP();
+  renderWeek();
 
   renderStats();
 }
