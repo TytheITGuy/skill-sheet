@@ -232,3 +232,18 @@ h1 {
 .xp-fill {
     box-shadow: 0 0 10px #ffd60a;
 }
+
+.card.rest::after {
+    content: "REST DAY";
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    padding: 4px 12px;
+    border: 2px solid var(--c);
+    border-radius: 5px;
+    color: var(--c);
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    transform: rotate(-6deg);
+}
