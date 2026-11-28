@@ -222,3 +222,13 @@ h1 {
     font-size: 18px;
     margin-bottom: 10px;
 }
+
+#xp-progress,
+#today-progress {
+    text-align: center;
+    color: #8f9bc4;
+}
+
+.xp-fill {
+    box-shadow: 0 0 10px #ffd60a;
+}
