@@ -247,3 +247,9 @@ h1 {
     letter-spacing: 2px;
     transform: rotate(-6deg);
 }
+
+.tab-button.active {
+    background-color: #ffd60a;
+    color: #0b1020;
+    font-weight: 700;
+}
